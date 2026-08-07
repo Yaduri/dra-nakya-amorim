@@ -78,20 +78,16 @@ document.addEventListener('DOMContentLoaded', () => {
   // ==========================================================================
   const baInputs = document.querySelectorAll('.ba-range-input');
   baInputs.forEach(input => {
-    const sliderContainer = input.closest('.ba-slider-wrapper');
-    const afterImgBox = sliderContainer.querySelector('.ba-after');
-    const handle = sliderContainer.querySelector('.ba-slider-handle');
+    const wrapper = input.closest('.ba-slider-wrapper');
+    if (wrapper) {
+      const updateSlider = (val) => {
+        wrapper.style.setProperty('--pos', `${val}%`);
+      };
 
-    const updateSlider = (val) => {
-      afterImgBox.style.width = `${val}%`;
-      handle.style.left = `${val}%`;
-    };
-
-    input.addEventListener('input', (e) => {
-      updateSlider(e.target.value);
-    });
-
-    updateSlider(50);
+      input.addEventListener('input', (e) => updateSlider(e.target.value));
+      input.addEventListener('change', (e) => updateSlider(e.target.value));
+      updateSlider(50);
+    }
   });
 
   // ==========================================================================
