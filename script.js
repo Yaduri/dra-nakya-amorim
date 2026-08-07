@@ -181,7 +181,7 @@ document.addEventListener('DOMContentLoaded', () => {
           const textMsg = encodeURIComponent(
             `Ol%C3%A1%2C%20Dra.%20Nakya!%20Fiz%20o%20Quiz%20no%20site.%20Meu%20foco%3A%20${userAnswers['pergunta_1']}.%20Quero%20agendar%20minha%20consulta!`
           );
-          resultWspBtn.href = `https://wa.me/5511942373219?text=${textMsg}`;
+          resultWspBtn.href = `https://wa.me/5511948371282?text=${textMsg}`;
         }
       }
     });
