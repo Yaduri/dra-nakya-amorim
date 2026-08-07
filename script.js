@@ -1,6 +1,5 @@
 /* ==========================================================================
-   ESTÉTICA NAKYA AMORIM — INTERACTIVE JAVASCRIPT
-   Navbar scroll, mobile menu, FAQ accordion, smooth anchor scrolling
+   ESTÉTICA NAKYA AMORIM — INTERACTIVE JAVASCRIPT (FEATURES 1-7)
    ========================================================================== */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -28,7 +27,6 @@ document.addEventListener('DOMContentLoaded', () => {
       navToggle.innerHTML = isExpanded ? '<i class="fa-solid fa-xmark"></i>' : '<i class="fa-solid fa-bars"></i>';
     });
 
-    // Close menu when link clicked
     navLinks.forEach(link => {
       link.addEventListener('click', () => {
         navMenu.classList.remove('active');
@@ -44,25 +42,17 @@ document.addEventListener('DOMContentLoaded', () => {
     if (header) {
       header.addEventListener('click', () => {
         const isActive = item.classList.contains('active');
-
-        // Close other items
         faqItems.forEach(otherItem => {
           if (otherItem !== item) {
             otherItem.classList.remove('active');
           }
         });
-
-        // Toggle current item
-        if (isActive) {
-          item.classList.remove('active');
-        } else {
-          item.classList.add('active');
-        }
+        item.classList.toggle('active', !isActive);
       });
     }
   });
 
-  // 4. SMOOTH SCROLL FOR ALL ANCHOR LINKS
+  // 4. SMOOTH SCROLL FOR ANCHOR LINKS
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
       const targetId = this.getAttribute('href');
@@ -83,25 +73,140 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // 5. INTERACTIVE VIDEO PLAYERS (Auto mute play on hover/click)
-  const videos = document.querySelectorAll('.video-wrapper video');
-  videos.forEach(video => {
-    video.addEventListener('click', () => {
-      if (video.paused) {
-        video.play();
-      } else {
-        video.pause();
+  // ==========================================================================
+  // ITEM 1: SLIDER INTERATIVO ANTES E DEPOIS
+  // ==========================================================================
+  const baInputs = document.querySelectorAll('.ba-range-input');
+  baInputs.forEach(input => {
+    const sliderContainer = input.closest('.ba-slider-wrapper');
+    const afterImgBox = sliderContainer.querySelector('.ba-after');
+    const handle = sliderContainer.querySelector('.ba-slider-handle');
+
+    const updateSlider = (val) => {
+      afterImgBox.style.width = `${val}%`;
+      handle.style.left = `${val}%`;
+    };
+
+    input.addEventListener('input', (e) => {
+      updateSlider(e.target.value);
+    });
+
+    updateSlider(50);
+  });
+
+  // ==========================================================================
+  // ITEM 2: VÍDEOS ESTILO REELS (AUTOPLAY SILENCIOSO + SOM MUTE/UNMUTE)
+  // ==========================================================================
+  const muteBtns = document.querySelectorAll('.video-mute-btn');
+  muteBtns.forEach(btn => {
+    const videoCard = btn.closest('.video-card');
+    const video = videoCard.querySelector('video');
+
+    if (video) {
+      // Tentar autoplay mudo
+      video.muted = true;
+      video.play().catch(() => {});
+
+      btn.addEventListener('click', () => {
+        video.muted = !video.muted;
+        if (video.muted) {
+          btn.innerHTML = '<i class="fa-solid fa-volume-xmark"></i> Ativar Som';
+        } else {
+          btn.innerHTML = '<i class="fa-solid fa-volume-high"></i> Mudar Som';
+        }
+      });
+    }
+  });
+
+  // ==========================================================================
+  // ITEM 3: SELETOR DE MODALIDADE (PRESENCIAL X ONLINE)
+  // ==========================================================================
+  const modTabs = document.querySelectorAll('.modalidade-tab');
+  const modContents = document.querySelectorAll('.modalidade-content');
+
+  modTabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      const target = tab.dataset.target;
+
+      modTabs.forEach(t => t.classList.remove('active'));
+      modContents.forEach(c => c.classList.remove('active'));
+
+      tab.classList.add('active');
+      document.getElementById(target).classList.add('active');
+    });
+  });
+
+  // ==========================================================================
+  // ITEM 4: MICRO-QUIZ INTERATIVO (3 PASSOS)
+  // ==========================================================================
+  const quizSteps = document.querySelectorAll('.quiz-step');
+  const quizProgressBar = document.querySelector('.quiz-progress-bar');
+  let userAnswers = {};
+
+  const quizOptions = document.querySelectorAll('.quiz-option-btn');
+  quizOptions.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const currentStepNum = parseInt(btn.dataset.step);
+      const answerVal = btn.dataset.value;
+
+      userAnswers[`pergunta_${currentStepNum}`] = answerVal;
+
+      // Avançar passo
+      const nextStepNum = currentStepNum + 1;
+      const currentStepEl = document.getElementById(`quiz-step-${currentStepNum}`);
+      const nextStepEl = document.getElementById(`quiz-step-${nextStepNum}`);
+
+      if (currentStepEl) currentStepEl.classList.remove('active');
+
+      if (nextStepEl) {
+        nextStepEl.classList.add('active');
+        const progressPercent = (nextStepNum / 3) * 100;
+        if (quizProgressBar) quizProgressBar.style.width = `${progressPercent}%`;
+      }
+
+      // Se for o passo final (resultado)
+      if (nextStepNum === 4) {
+        if (quizProgressBar) quizProgressBar.style.width = `100%`;
+        const resultTextEl = document.getElementById('quiz-result-text');
+        const resultWspBtn = document.getElementById('quiz-wsp-btn');
+
+        let recomText = "Protocolo Melasma Control e Avaliação Biológica Personalizada";
+        if (userAnswers['pergunta_1'] === 'firmeza') {
+          recomText = "Protocolo de Rejuvenescimento e Estímulo de Colágeno";
+        } else if (userAnswers['pergunta_1'] === 'limpeza') {
+          recomText = "Limpeza de Pele Científica e Detox Cutâneo";
+        }
+
+        if (resultTextEl) {
+          resultTextEl.innerHTML = `Com base nas suas respostas, a conduta recomendada para a sua pele é o <strong>${recomText}</strong>.`;
+        }
+
+        if (resultWspBtn) {
+          const textMsg = encodeURIComponent(
+            `Ol%C3%A1%2C%20Dra.%20Nakya!%20Fiz%20o%20Quiz%20no%20site.%20Meu%20foco%3A%20${userAnswers['pergunta_1']}.%20Quero%20agendar%20minha%20consulta!`
+          );
+          resultWspBtn.href = `https://wa.me/5511942373219?text=${textMsg}`;
+        }
       }
     });
   });
 
-  // 6. INTERSECTION OBSERVER FOR FADE-IN ANIMATIONS
-  const observerOptions = {
-    root: null,
-    rootMargin: '0px',
-    threshold: 0.1
-  };
+  // Reset Quiz
+  const quizResetBtn = document.getElementById('quiz-reset-btn');
+  if (quizResetBtn) {
+    quizResetBtn.addEventListener('click', () => {
+      quizSteps.forEach(s => s.classList.remove('active'));
+      const firstStep = document.getElementById('quiz-step-1');
+      if (firstStep) firstStep.classList.add('active');
+      if (quizProgressBar) quizProgressBar.style.width = '33%';
+      userAnswers = {};
+    });
+  }
 
+  // ==========================================================================
+  // INTERSECTION OBSERVER FOR FADE-IN ANIMATIONS
+  // ==========================================================================
+  const observerOptions = { root: null, rootMargin: '0px', threshold: 0.1 };
   const observer = new IntersectionObserver((entries, observer) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
@@ -112,9 +217,8 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }, observerOptions);
 
-  // Apply fade-in effect to cards
   const animatedElements = document.querySelectorAll(
-    '.pain-card, .pillar-card, .treatment-card, .video-card, .testimonial-card, .step-card, .results-card'
+    '.pain-card, .pillar-card, .treatment-card, .video-card, .testimonial-card, .step-card, .results-card, .insta-post-card'
   );
 
   animatedElements.forEach(el => {
