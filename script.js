@@ -178,10 +178,9 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         if (resultWspBtn) {
-          const textMsg = encodeURIComponent(
-            `Ol%C3%A1%2C%20Dra.%20Nakya!%20Fiz%20o%20Quiz%20no%20site.%20Meu%20foco%3A%20${userAnswers['pergunta_1']}.%20Quero%20agendar%20minha%20consulta!`
-          );
-          resultWspBtn.href = `https://wa.me/5511948371282?text=${textMsg}`;
+          const focoText = userAnswers['pergunta_1'] ? userAnswers['pergunta_1'].toUpperCase() : 'SAÚDE DA PELE';
+          const rawText = `Olá, Dra. Nakya! Fiz o Quiz no site. Meu foco principal: ${focoText}. Gostaria de agendar minha consulta!`;
+          resultWspBtn.href = `https://wa.me/5511948371282?text=${encodeURIComponent(rawText)}`;
         }
       }
     });
