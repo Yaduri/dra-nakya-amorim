@@ -58,9 +58,11 @@
   --transition-slow: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-html {
-  scroll-behavior: smooth;
-  font-size: 16px;
+html, body {
+  max-width: 100%;
+  overflow-x: hidden !important;
+  width: 100%;
+  position: relative;
 }
 
 body {
@@ -68,7 +70,6 @@ body {
   background-color: var(--bg-primary);
   color: var(--color-text-main);
   line-height: 1.6;
-  overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
 }
 
@@ -503,14 +504,14 @@ ul {
 }
 
 .floating-badge-top-left {
-  top: 24px;
-  left: -20px;
+  top: 20px;
+  left: 10px;
   animation: floatSlow 4s ease-in-out infinite alternate;
 }
 
 .floating-badge-bottom-right {
-  bottom: 24px;
-  right: -15px;
+  bottom: 20px;
+  right: 10px;
   animation: floatSlow 5s ease-in-out infinite alternate-reverse;
 }
 
@@ -1341,58 +1342,67 @@ ul {
 }
 
 /* --------------------------------------------------------------------------
-   19. RESPONSIVIDADE (MEDIA QUERIES)
+   19. RESPONSIVIDADE (MEDIA QUERIES ULTRA-CLEAN & ZERO OVERFLOW)
    -------------------------------------------------------------------------- */
+h1, h2, h3, h4, .section-title, .hero-title, .footer-info h2, .melasma-banner h2 {
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  hyphens: auto;
+  max-width: 100%;
+}
+
 @media (max-width: 991px) {
   .section-title { font-size: 2.1rem; }
-  .hero-title { font-size: 2.6rem; }
+  .hero-title { font-size: 2.5rem; }
   
   .hero-grid {
     grid-template-columns: 1fr;
-    gap: 48px;
+    gap: 40px;
   }
 
   .floating-badge-top-left {
-    top: 16px;
-    left: 12px;
+    top: 12px;
+    left: 8px;
   }
 
   .floating-badge-bottom-right {
-    bottom: 16px;
-    right: 12px;
+    bottom: 12px;
+    right: 8px;
   }
 
   .method-grid,
   .about-grid,
   .footer-grid {
     grid-template-columns: 1fr;
-    gap: 40px;
+    gap: 36px;
   }
   
   .hero-image-card img {
-    height: 460px;
+    height: 440px;
   }
 
   .method-image-card img,
   .about-image-card img {
-    height: 400px;
+    height: 380px;
   }
   
   .trust-grid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: 1fr;
+    gap: 16px;
   }
   
   .treatments-grid,
-  .testimonials-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  
+  .testimonials-grid,
   .steps-grid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: 1fr;
   }
 }
 
 @media (max-width: 768px) {
+  .container {
+    padding: 0 16px;
+  }
+
   .nav-menu {
     position: fixed;
     top: 70px;
@@ -1402,7 +1412,7 @@ ul {
     background: var(--bg-primary);
     flex-direction: column;
     justify-content: center;
-    padding: 40px;
+    padding: 30px 20px;
     transition: var(--transition-normal);
   }
   
@@ -1415,19 +1425,19 @@ ul {
   }
   
   .hero {
-    padding-top: 120px;
-    padding-bottom: 50px;
+    padding-top: 110px;
+    padding-bottom: 40px;
   }
   
   .hero-title {
-    font-size: 2.1rem;
+    font-size: 2rem;
     line-height: 1.2;
     margin-bottom: 16px;
   }
 
   .hero-subtitle {
-    font-size: 1rem;
-    margin-bottom: 24px;
+    font-size: 0.98rem;
+    margin-bottom: 20px;
   }
 
   .hero-ctas {
@@ -1442,31 +1452,43 @@ ul {
   }
 
   .hero-stats {
-    justify-content: space-around;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    text-align: center;
     padding-top: 20px;
   }
 
+  .hero-stat-number {
+    font-size: 1.2rem;
+  }
+
+  .hero-stat-label {
+    font-size: 0.72rem;
+  }
+
   .hero-image-card img {
-    height: 380px;
+    height: 360px;
   }
 
   .floating-badge {
-    padding: 8px 12px;
-    gap: 8px;
+    padding: 6px 10px;
+    gap: 6px;
+    max-width: calc(100% - 16px);
   }
 
   .badge-icon-trophy, .badge-icon-google {
-    width: 30px;
-    height: 30px;
-    font-size: 0.9rem;
-  }
-
-  .floating-badge-text strong {
+    width: 28px;
+    height: 28px;
     font-size: 0.8rem;
   }
 
+  .floating-badge-text strong {
+    font-size: 0.75rem;
+  }
+
   .floating-badge-text span {
-    font-size: 0.7rem;
+    font-size: 0.65rem;
   }
   
   .pain-grid,
@@ -1477,14 +1499,30 @@ ul {
   .steps-grid {
     grid-template-columns: 1fr;
   }
+
+  .footer-info h2 {
+    font-size: 1.7rem;
+    line-height: 1.25;
+  }
   
   .melasma-banner {
-    padding: 36px 20px;
+    padding: 32px 16px;
   }
   
   .melasma-banner h2 {
-    font-size: 1.7rem;
+    font-size: 1.6rem;
   }
+
+  .map-wrapper {
+    height: 260px;
+  }
+}
+
+@media (max-width: 480px) {
+  .section-padding { padding: 50px 0; }
+  .hero-title { font-size: 1.75rem; }
+  .section-title { font-size: 1.75rem; }
+  .btn { width: 100%; }
 }
 
 /* --------------------------------------------------------------------------
