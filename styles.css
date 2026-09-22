@@ -90,6 +90,139 @@ ul {
 }
 
 /* --------------------------------------------------------------------------
+   CUSTOM BROWSER SURFACES (SELECTION & SCROLLBAR)
+   -------------------------------------------------------------------------- */
+::selection {
+  background: var(--color-rose-dust);
+  color: var(--color-white);
+}
+
+::-moz-selection {
+  background: var(--color-rose-dust);
+  color: var(--color-white);
+}
+
+/* Lenis recommended styles */
+html.lenis, html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis.lenis-scrolling iframe {
+  pointer-events: none;
+}
+
+/* --------------------------------------------------------------------------
+   0. LUXURY PRELOADER (CINEMATIC REVEAL)
+   -------------------------------------------------------------------------- */
+.preloader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 99999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--bg-primary);
+  pointer-events: all;
+  overflow: hidden;
+}
+
+.preloader-curtain {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at center, #FFFFFF 0%, var(--bg-primary) 70%, #F5EBE6 100%);
+  z-index: 1;
+}
+
+.preloader-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  max-width: 90vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.preloader-brand {
+  margin-bottom: 24px;
+}
+
+.preloader-tag {
+  display: inline-block;
+  font-size: 0.75rem;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--color-rose-dark);
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.preloader-title {
+  font-family: var(--font-serif);
+  font-size: 2.8rem;
+  color: var(--color-text-main);
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  line-height: 1.1;
+  margin-bottom: 6px;
+}
+
+.preloader-sub {
+  font-size: 0.85rem;
+  letter-spacing: 1.5px;
+  color: var(--color-text-muted);
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+.preloader-progress-wrap {
+  width: 220px;
+  height: 2px;
+  background: rgba(200, 155, 156, 0.25);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+  margin-bottom: 12px;
+  position: relative;
+}
+
+.preloader-progress-bar {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, var(--color-rose-dust), var(--color-gold));
+  border-radius: var(--radius-full);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.15s ease-out;
+}
+
+.preloader-counter {
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: var(--color-rose-dark);
+  font-variant-numeric: tabular-nums;
+}
+
+/* --------------------------------------------------------------------------
    2. UTILITIES & CONTAINER
    -------------------------------------------------------------------------- */
 .container {
@@ -703,12 +836,14 @@ ul {
   display: flex;
   gap: 20px;
   align-items: flex-start;
-  transition: var(--transition-normal);
+  transition: transform var(--transition-normal), border-color var(--transition-normal), box-shadow var(--transition-normal);
 }
 
-.pillar-card:hover {
-  transform: translateX(6px);
-  box-shadow: var(--shadow-soft);
+.pillar-card:hover,
+.pillar-card.is-active {
+  transform: translateX(8px);
+  box-shadow: var(--shadow-medium);
+  border-color: var(--color-gold);
 }
 
 .pillar-number {
@@ -717,7 +852,13 @@ ul {
   font-weight: 700;
   color: var(--color-rose-dark);
   line-height: 1;
+  transition: color var(--transition-normal), transform var(--transition-normal);
   flex-shrink: 0;
+}
+
+.pillar-card.is-active .pillar-number {
+  color: var(--color-gold);
+  transform: scale(1.08);
 }
 
 .pillar-info h3 {
