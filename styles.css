@@ -590,6 +590,7 @@ html.lenis, html.lenis body {
 .hero-image-wrapper {
   position: relative;
   z-index: 1;
+  width: 100%;
 }
 
 .hero-image-card {
@@ -598,7 +599,7 @@ html.lenis, html.lenis body {
   padding: 8px;
   background: linear-gradient(135deg, #E8D3C5 0%, #D4AF37 50%, #C89B9C 100%);
   box-shadow: 0 25px 50px rgba(44, 38, 38, 0.12);
-  transition: var(--transition-slow);
+  transition: box-shadow var(--transition-normal);
 }
 
 .hero-image-card-inner {
@@ -613,7 +614,8 @@ html.lenis, html.lenis body {
   height: 560px;
   object-fit: cover;
   object-position: center top;
-  transition: var(--transition-slow);
+  display: block;
+  transition: transform var(--transition-normal);
 }
 
 .hero-image-card:hover img {

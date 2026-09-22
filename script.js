@@ -52,15 +52,15 @@ document.addEventListener('DOMContentLoaded', () => {
       const heroTl = gsap.timeline({ defaults: { ease: 'power3.out' } });
 
       heroTl
-        .from('.navbar', { y: -30, opacity: 0, duration: 0.8 })
-        .from('.hero-badge', { y: 20, opacity: 0, duration: 0.6 }, '-=0.4')
-        .from('.hero-title', { y: 30, opacity: 0, duration: 0.9 }, '-=0.4')
-        .from('.hero-subtitle', { y: 20, opacity: 0, duration: 0.7 }, '-=0.5')
-        .from('.hero-bullet-item', { y: 15, opacity: 0, duration: 0.5, stagger: 0.1 }, '-=0.4')
-        .from('.hero-ctas', { y: 20, opacity: 0, duration: 0.6 }, '-=0.3')
-        .from('.hero-stats', { opacity: 0, duration: 0.6 }, '-=0.3')
-        .from('.hero-image-card', { scale: 0.96, opacity: 0, duration: 1 }, '-=0.9')
-        .from('.floating-badge', { scale: 0.8, opacity: 0, duration: 0.7, stagger: 0.2 }, '-=0.5');
+        .fromTo('.navbar', { y: -20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6, clearProps: 'all' })
+        .fromTo('.hero-badge', { y: 15, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5, clearProps: 'all' }, '-=0.3')
+        .fromTo('.hero-title', { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.7, clearProps: 'all' }, '-=0.3')
+        .fromTo('.hero-subtitle', { y: 15, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6, clearProps: 'all' }, '-=0.4')
+        .fromTo('.hero-bullet-item', { y: 10, opacity: 0 }, { y: 0, opacity: 1, duration: 0.4, stagger: 0.08, clearProps: 'all' }, '-=0.3')
+        .fromTo('.hero-ctas', { y: 15, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5, clearProps: 'all' }, '-=0.2')
+        .fromTo('.hero-stats', { opacity: 0 }, { opacity: 1, duration: 0.5, clearProps: 'all' }, '-=0.2')
+        .fromTo('.hero-image-card', { y: 25, opacity: 0 }, { y: 0, opacity: 1, duration: 0.8, clearProps: 'all' }, '-=0.7')
+        .fromTo('.floating-badge', { opacity: 0 }, { opacity: 1, duration: 0.6, stagger: 0.15, clearProps: 'opacity' }, '-=0.4');
 
       // Parallax sutil nos glows de fundo
       if (typeof ScrollTrigger !== 'undefined') {
@@ -163,19 +163,21 @@ document.addEventListener('DOMContentLoaded', () => {
             const exitTl = gsap.timeline({
               onComplete: () => {
                 preloader.style.display = 'none';
-                launchHeroAnimations();
               }
             });
 
+            // Iniciar animação da hero logo antes do curtain subir completamente
+            launchHeroAnimations();
+
             exitTl
               .to('.preloader-content', { opacity: 0, y: -20, duration: 0.4, ease: 'power2.in' })
-              .to('.preloader-curtain', { yPercent: -100, duration: 0.9, ease: 'power4.inOut' }, '-=0.1');
+              .to('.preloader-curtain', { yPercent: -100, duration: 0.8, ease: 'power4.inOut' }, '-=0.1');
           } else {
             preloader.style.transition = 'opacity 0.6s ease';
             preloader.style.opacity = '0';
+            launchHeroAnimations();
             setTimeout(() => {
               preloader.style.display = 'none';
-              launchHeroAnimations();
             }, 600);
           }
         }
