@@ -52,7 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Handle Preloader dismissal & Hero entrance
   const launchHeroAnimations = () => {
     if (prefersReducedMotion) {
-      document.querySelectorAll('.navbar, .hero-badge, .hero-title, .hero-subtitle, .hero-bullet-item, .hero-ctas, .hero-stats, .hero-image-card, .floating-badge').forEach(el => {
+      document.querySelectorAll('.navbar, .hero-badge, .hero-title, .hero-subtitle, .hero-bullet-item, .hero-ctas, .hero-stats, .hero-image-card, .floating-badge, .treatment-card, .testimonial-card, .step-card').forEach(el => {
         el.style.opacity = '1';
         el.style.transform = 'none';
       });
@@ -86,48 +86,77 @@ document.addEventListener('DOMContentLoaded', () => {
           });
         });
 
-        // Revelação Stagger nos cards de tratamentos
-        gsap.from('.treatment-card', {
-          scrollTrigger: {
-            trigger: '.treatments-grid',
-            start: 'top 80%',
-            once: true
-          },
-          y: 35,
-          opacity: 0,
-          duration: 0.8,
-          stagger: 0.15,
-          ease: 'power2.out'
-        });
+        // Revelação Stagger nos cards de tratamentos (Nosso Portfólio)
+        gsap.fromTo('.treatment-card',
+          { y: 30, opacity: 0 },
+          {
+            scrollTrigger: {
+              trigger: '#tratamentos',
+              start: 'top 85%',
+              once: true
+            },
+            y: 0,
+            opacity: 1,
+            duration: 0.7,
+            stagger: 0.12,
+            ease: 'power2.out',
+            clearProps: 'all'
+          }
+        );
 
         // Revelação Stagger nos depoimentos
-        gsap.from('.testimonial-card', {
-          scrollTrigger: {
-            trigger: '.testimonials-grid',
-            start: 'top 80%',
-            once: true
-          },
-          y: 30,
-          opacity: 0,
-          duration: 0.8,
-          stagger: 0.15,
-          ease: 'power2.out'
-        });
+        gsap.fromTo('.testimonial-card',
+          { y: 30, opacity: 0 },
+          {
+            scrollTrigger: {
+              trigger: '#depoimentos',
+              start: 'top 85%',
+              once: true
+            },
+            y: 0,
+            opacity: 1,
+            duration: 0.7,
+            stagger: 0.12,
+            ease: 'power2.out',
+            clearProps: 'all'
+          }
+        );
 
         // Revelação nos passos de atendimento
-        gsap.from('.step-card', {
-          scrollTrigger: {
-            trigger: '.steps-grid',
-            start: 'top 80%',
-            once: true
-          },
-          y: 25,
-          opacity: 0,
-          duration: 0.7,
-          stagger: 0.12,
-          ease: 'power2.out'
-        });
+        gsap.fromTo('.step-card',
+          { y: 25, opacity: 0 },
+          {
+            scrollTrigger: {
+              trigger: '.steps-grid',
+              start: 'top 90%',
+              once: true
+            },
+            y: 0,
+            opacity: 1,
+            duration: 0.6,
+            stagger: 0.1,
+            ease: 'power2.out',
+            clearProps: 'all'
+          }
+        );
       }
+    }
+
+    // Fail-safe com IntersectionObserver: assegura visibilidade incondicional assim que entra na tela
+    if ('IntersectionObserver' in window) {
+      const cardObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.style.opacity = '1';
+            entry.target.style.transform = 'none';
+            cardObserver.unobserve(entry.target);
+          }
+        });
+      }, { rootMargin: '80px 0px' });
+
+      document.querySelectorAll('.treatment-card, .testimonial-card, .step-card').forEach(card => {
+        cardObserver.observe(card);
+      });
     }
   };
 
@@ -135,6 +164,9 @@ document.addEventListener('DOMContentLoaded', () => {
     if (hasVisited || prefersReducedMotion) {
       preloader.style.display = 'none';
       launchHeroAnimations();
+      if (typeof ScrollTrigger !== 'undefined') {
+        ScrollTrigger.refresh();
+      }
     } else {
       let progress = 0;
       const interval = setInterval(() => {
@@ -152,6 +184,9 @@ document.addEventListener('DOMContentLoaded', () => {
             const exitTl = gsap.timeline({
               onComplete: () => {
                 preloader.style.display = 'none';
+                if (typeof ScrollTrigger !== 'undefined') {
+                  ScrollTrigger.refresh();
+                }
               }
             });
 
@@ -167,6 +202,9 @@ document.addEventListener('DOMContentLoaded', () => {
             launchHeroAnimations();
             setTimeout(() => {
               preloader.style.display = 'none';
+              if (typeof ScrollTrigger !== 'undefined') {
+                ScrollTrigger.refresh();
+              }
             }, 600);
           }
         }
@@ -235,7 +273,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // ==========================================================================
-  // 4. SMOOTH SCROLL FOR ANCHOR LINKS (INTEGRATED WITH LENIS)
+  // 4. SMOOTH SCROLL FOR ANCHOR LINKS (INTEGRATED WITH LENIS & SCROLLTRIGGER)
   // ==========================================================================
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
@@ -245,6 +283,13 @@ document.addEventListener('DOMContentLoaded', () => {
       const targetElement = document.querySelector(targetId);
       if (targetElement) {
         e.preventDefault();
+
+        // Garantir visibilidade imediata de cards na seção de destino
+        targetElement.querySelectorAll('.treatment-card, .testimonial-card, .step-card').forEach(card => {
+          card.style.opacity = '1';
+          card.style.transform = 'none';
+        });
+
         if (lenisInstance) {
           lenisInstance.scrollTo(targetElement, { offset: -70 });
         } else {
@@ -255,6 +300,11 @@ document.addEventListener('DOMContentLoaded', () => {
             top: offsetPosition,
             behavior: 'smooth'
           });
+        }
+
+        if (typeof ScrollTrigger !== 'undefined') {
+          setTimeout(() => ScrollTrigger.refresh(), 300);
+          setTimeout(() => ScrollTrigger.refresh(), 700);
         }
       }
     });
@@ -400,5 +450,23 @@ document.addEventListener('DOMContentLoaded', () => {
       userAnswers = {};
     });
   }
+
+  // ==========================================================================
+  // 9. WINDOW LOAD SYNC & GLOBAL CARD VISIBILITY SAFEGUARD
+  // ==========================================================================
+  window.addEventListener('load', () => {
+    if (typeof ScrollTrigger !== 'undefined') {
+      ScrollTrigger.refresh();
+    }
+  });
+
+  setTimeout(() => {
+    document.querySelectorAll('.treatment-card, .testimonial-card, .step-card').forEach(el => {
+      if (window.getComputedStyle(el).opacity === '0') {
+        el.style.opacity = '1';
+        el.style.transform = 'none';
+      }
+    });
+  }, 1500);
 
 });
