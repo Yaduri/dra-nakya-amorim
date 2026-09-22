@@ -16,6 +16,14 @@
   <meta property="og:description" content="Tratamentos faciais de alta performance baseados em ciência. Agende sua consulta avaliativa no Jardim Florida em Jundiaí.">
   <meta property="og:image" content="images/foto%20profisional%20nakya.webp">
   
+  <!-- Font Preconnect & Loading Optimization -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Plus+Jakarta+Sans:ital,wght@0,300..800;1,300..800&display=swap">
+
+  <!-- Preload Hero Image (LCP Optimization) -->
+  <link rel="preload" as="image" href="images/foto%20profisional%20nakya.webp" type="image/webp" fetchpriority="high">
+
   <!-- Font Awesome 6 (Icons) -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
@@ -75,9 +83,6 @@
          2. HERO SECTION (RENOVADA & ULTRA PREMIUM)
          ========================================================================== -->
     <section class="hero">
-      <div class="hero-glow-1"></div>
-      <div class="hero-glow-2"></div>
-      
       <div class="container hero-grid">
         <div class="hero-content">
           <div class="hero-badge">
@@ -134,31 +139,31 @@
         </div>
 
         <div class="hero-image-wrapper">
+          <!-- Badge 1: Top Left Flutuante -->
+          <div class="floating-badge floating-badge-top-left">
+            <div class="badge-icon-trophy">
+              <i class="fa-solid fa-trophy"></i>
+            </div>
+            <div class="floating-badge-text">
+              <strong>Eleita Melhor Clínica</strong>
+              <span>Jundiaí e Região</span>
+            </div>
+          </div>
+
           <div class="hero-image-card">
-            <!-- Badge 1: Top Left Flutuante -->
-            <div class="floating-badge floating-badge-top-left">
-              <div class="badge-icon-trophy">
-                <i class="fa-solid fa-trophy"></i>
-              </div>
-              <div class="floating-badge-text">
-                <strong>Eleita Melhor Clínica</strong>
-                <span>Jundiaí e Região</span>
-              </div>
+            <div class="hero-image-frame">
+              <img src="images/foto%20profisional%20nakya.webp" alt="Dra. Nakya Amorim - Esteticista Especialista em Melasma em Jundiaí" fetchpriority="high">
             </div>
+          </div>
 
-            <div class="hero-image-card-inner">
-              <img src="images/foto%20profisional%20nakya.webp" alt="Dra. Nakya Amorim - Esteticista Especialista em Melasma em Jundiaí">
+          <!-- Badge 2: Bottom Right Flutuante -->
+          <div class="floating-badge floating-badge-bottom-right">
+            <div class="badge-icon-google">
+              <i class="fa-solid fa-star"></i>
             </div>
-
-            <!-- Badge 2: Bottom Right Flutuante -->
-            <div class="floating-badge floating-badge-bottom-right">
-              <div class="badge-icon-google">
-                <i class="fa-solid fa-star"></i>
-              </div>
-              <div class="floating-badge-text">
-                <strong>Avaliação 5.0 ★★★★★</strong>
-                <span>Depoimentos Reais no Google</span>
-              </div>
+            <div class="floating-badge-text">
+              <strong>Avaliação 5.0 ★★★★★</strong>
+              <span>Depoimentos Reais no Google</span>
             </div>
           </div>
         </div>
@@ -173,28 +178,28 @@
         <div class="trust-item">
           <div class="trust-icon"><i class="fa-solid fa-star"></i></div>
           <div class="trust-text">
-            <h4>Nota 5.0 no Google</h4>
+            <p class="trust-title">Nota 5.0 no Google</p>
             <p>Avaliação máxima das pacientes</p>
           </div>
         </div>
         <div class="trust-item">
           <div class="trust-icon"><i class="fa-solid fa-trophy"></i></div>
           <div class="trust-text">
-            <h4>Melhor Clínica</h4>
+            <p class="trust-title">Melhor Clínica</p>
             <p>Destaque regional em Jundiaí</p>
           </div>
         </div>
         <div class="trust-item">
           <div class="trust-icon"><i class="fa-solid fa-microscope"></i></div>
           <div class="trust-text">
-            <h4>100% Ciência</h4>
+            <p class="trust-title">100% Ciência</p>
             <p>Protocolos dermatofuncionais</p>
           </div>
         </div>
         <div class="trust-item">
           <div class="trust-icon"><i class="fa-solid fa-location-dot"></i></div>
           <div class="trust-text">
-            <h4>Jardim Florida</h4>
+            <p class="trust-title">Jardim Florida</p>
             <p>Localização nobre em Jundiaí - SP</p>
           </div>
         </div>
@@ -206,22 +211,22 @@
       <div class="container biosafety-grid">
         <div class="biosafety-item">
           <div class="biosafety-icon"><i class="fa-solid fa-vial-circle-check"></i></div>
-          <h4>Ativos Biocompatíveis</h4>
+          <p class="biosafety-title">Ativos Biocompatíveis</p>
           <p>Dermocosméticos de alta performance</p>
         </div>
         <div class="biosafety-item">
           <div class="biosafety-icon"><i class="fa-solid fa-shield-virus"></i></div>
-          <h4>Zero Efeito Rebote</h4>
+          <p class="biosafety-title">Zero Efeito Rebote</p>
           <p>Protocolos seguros sem agressão</p>
         </div>
         <div class="biosafety-item">
           <div class="biosafety-icon"><i class="fa-solid fa-circle-check"></i></div>
-          <h4>Aprovado na ANVISA</h4>
+          <p class="biosafety-title">Aprovado na ANVISA</p>
           <p>100% dos produtos certificados</p>
         </div>
         <div class="biosafety-item">
           <div class="biosafety-icon"><i class="fa-solid fa-hand-holding-heart"></i></div>
-          <h4>Atendimento VIP</h4>
+          <p class="biosafety-title">Atendimento VIP</p>
           <p>Biossegurança e acolhimento</p>
         </div>
       </div>
@@ -334,7 +339,6 @@
       <div class="container">
         <div class="melasma-banner">
           <div class="melasma-content">
-            <span class="melasma-badge"><i class="fa-solid fa-flask"></i> Especialidade da Clínica</span>
             <h2>Melasma não precisa ser um pesadelo diário. Ele tem controle inteligente.</h2>
             <p>
               O melasma é uma condição vascular e inflamatória complexa. Tratá-lo apenas 'descamando' a pele com ácidos fortes é o maior erro da estética tradicional. Nosso protocolo atua no controle da inflamação profunda, devolvendo o tom uniforme e a luminosidade natural sem efeito rebote.
@@ -438,16 +442,16 @@
           <p class="section-subtitle">Atendimento presencial em espaço exclusivo em Jundiaí - SP ou Consultoria Online de qualquer lugar.</p>
         </div>
 
-        <div class="modalidade-tabs">
-          <button class="modalidade-tab active" data-target="mod-presencial">
+        <div class="modalidade-tabs" role="tablist" aria-label="Modalidade de Atendimento">
+          <button class="modalidade-tab active" role="tab" id="tab-presencial" aria-selected="true" aria-controls="mod-presencial" tabindex="0" data-target="mod-presencial">
             <i class="fa-solid fa-location-dot"></i> Presencial (Jundiaí - SP)
           </button>
-          <button class="modalidade-tab" data-target="mod-online">
+          <button class="modalidade-tab" role="tab" id="tab-online" aria-selected="false" aria-controls="mod-online" tabindex="-1" data-target="mod-online">
             <i class="fa-solid fa-laptop-medical"></i> Consultoria Online (Brasil e Exterior)
           </button>
         </div>
 
-        <div class="modalidade-content active" id="mod-presencial">
+        <div class="modalidade-content active" id="mod-presencial" role="tabpanel" aria-labelledby="tab-presencial">
           <div class="method-grid">
             <div class="method-image-card">
               <img src="images/foto%20profisional%20nakya.webp" alt="Atendimento Presencial no Jardim Florida em Jundiaí" loading="lazy">
@@ -469,7 +473,7 @@
           </div>
         </div>
 
-        <div class="modalidade-content" id="mod-online">
+        <div class="modalidade-content" id="mod-online" role="tabpanel" aria-labelledby="tab-online">
           <div class="method-grid">
             <div class="method-image-card">
               <img src="images/passando%20produto.webp" alt="Consultoria de Pele Online com a Dra. Nakya Amorim" loading="lazy">
@@ -902,51 +906,51 @@
 
         <div class="faq-container">
           <div class="faq-item active">
-            <div class="faq-header">
-              <h3>O tratamento para Melasma tem cura definitiva?</h3>
-              <span class="faq-icon"><i class="fa-solid fa-plus"></i></span>
-            </div>
-            <div class="faq-body">
+            <button type="button" class="faq-trigger" aria-expanded="true" aria-controls="faq-desc-1" id="faq-btn-1">
+              <span class="faq-question">O tratamento para Melasma tem cura definitiva?</span>
+              <span class="faq-icon" aria-hidden="true"><i class="fa-solid fa-plus"></i></span>
+            </button>
+            <div class="faq-body" id="faq-desc-1" role="region" aria-labelledby="faq-btn-1">
               O melasma é uma condição crônica que não possui cura definitiva, mas possui <strong>controle eficaz e duradouro</strong>. Nosso protocolo estabiliza a inflamação e clareia as manchas sem descamações agressivas, prevenindo o efeito rebote.
             </div>
           </div>
 
           <div class="faq-item">
-            <div class="faq-header">
-              <h3>Os procedimentos doem ou deixam a pele vermelha por dias?</h3>
-              <span class="faq-icon"><i class="fa-solid fa-plus"></i></span>
-            </div>
-            <div class="faq-body">
+            <button type="button" class="faq-trigger" aria-expanded="false" aria-controls="faq-desc-2" id="faq-btn-2">
+              <span class="faq-question">Os procedimentos doem ou deixam a pele vermelha por dias?</span>
+              <span class="faq-icon" aria-hidden="true"><i class="fa-solid fa-plus"></i></span>
+            </button>
+            <div class="faq-body" id="faq-desc-2" role="region" aria-labelledby="faq-btn-2">
               Não. Priorizamos a integridade da barreira cutânea com tratamentos confortáveis. A pele não precisa sofrer para ter grandes resultados.
             </div>
           </div>
 
           <div class="faq-item">
-            <div class="faq-header">
-              <h3>Onde fica localizada a clínica em Jundiaí?</h3>
-              <span class="faq-icon"><i class="fa-solid fa-plus"></i></span>
-            </div>
-            <div class="faq-body">
+            <button type="button" class="faq-trigger" aria-expanded="false" aria-controls="faq-desc-3" id="faq-btn-3">
+              <span class="faq-question">Onde fica localizada a clínica em Jundiaí?</span>
+              <span class="faq-icon" aria-hidden="true"><i class="fa-solid fa-plus"></i></span>
+            </button>
+            <div class="faq-body" id="faq-desc-3" role="region" aria-labelledby="faq-btn-3">
               Estamos localizadas na <strong>R. Hilda Del Nero Bisquolo - Jardim Florida, Jundiaí - SP, 13208-703</strong>, em um local de fácil acesso, segurança e estacionamento.
             </div>
           </div>
 
           <div class="faq-item">
-            <div class="faq-header">
-              <h3>Como funciona a Consultoria Online?</h3>
-              <span class="faq-icon"><i class="fa-solid fa-plus"></i></span>
-            </div>
-            <div class="faq-body">
+            <button type="button" class="faq-trigger" aria-expanded="false" aria-controls="faq-desc-4" id="faq-btn-4">
+              <span class="faq-question">Como funciona a Consultoria Online?</span>
+              <span class="faq-icon" aria-hidden="true"><i class="fa-solid fa-plus"></i></span>
+            </button>
+            <div class="faq-body" id="faq-desc-4" role="region" aria-labelledby="faq-btn-4">
               Ideal para quem mora fora de Jundiaí. Analisamos detalhadamente suas fotos, rotina e histórico, prescrevendo um plano de Home Care Científico perfeito para o seu dia a dia.
             </div>
           </div>
 
           <div class="faq-item">
-            <div class="faq-header">
-              <h3>Como faço para agendar meu horário?</h3>
-              <span class="faq-icon"><i class="fa-solid fa-plus"></i></span>
-            </div>
-            <div class="faq-body">
+            <button type="button" class="faq-trigger" aria-expanded="false" aria-controls="faq-desc-5" id="faq-btn-5">
+              <span class="faq-question">Como faço para agendar meu horário?</span>
+              <span class="faq-icon" aria-hidden="true"><i class="fa-solid fa-plus"></i></span>
+            </button>
+            <div class="faq-body" id="faq-desc-5" role="region" aria-labelledby="faq-btn-5">
               Basta clicar em qualquer botão de WhatsApp desta página para ser atendida rapidamente pela nossa equipe.
             </div>
           </div>

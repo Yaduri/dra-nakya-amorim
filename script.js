@@ -7,8 +7,11 @@
 document.addEventListener('DOMContentLoaded', () => {
 
   // ==========================================================================
-  // 0. LUXURY CINEMATIC PRELOADER
   // ==========================================================================
+  // 0. ACCESSIBILITY & MOTION SENSITIVITY CHECK (WCAG 2.3.3)
+  // ==========================================================================
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
   const preloader = document.getElementById('preloader');
   const preloaderBar = document.getElementById('preloader-bar');
   const preloaderNum = document.getElementById('preloader-num');
@@ -16,8 +19,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   let lenisInstance = null;
 
-  // Initialize Lenis Smooth Scroll
-  if (typeof Lenis !== 'undefined') {
+  // Initialize Lenis Smooth Scroll only if user has not requested reduced motion
+  if (!prefersReducedMotion && typeof Lenis !== 'undefined') {
     lenisInstance = new Lenis({
       duration: 1.2,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
@@ -48,6 +51,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Handle Preloader dismissal & Hero entrance
   const launchHeroAnimations = () => {
+    if (prefersReducedMotion) {
+      document.querySelectorAll('.navbar, .hero-badge, .hero-title, .hero-subtitle, .hero-bullet-item, .hero-ctas, .hero-stats, .hero-image-card, .floating-badge').forEach(el => {
+        el.style.opacity = '1';
+        el.style.transform = 'none';
+      });
+      return;
+    }
+
     if (typeof gsap !== 'undefined') {
       const heroTl = gsap.timeline({ defaults: { ease: 'power3.out' } });
 
@@ -62,29 +73,7 @@ document.addEventListener('DOMContentLoaded', () => {
         .fromTo('.hero-image-card', { y: 25, opacity: 0 }, { y: 0, opacity: 1, duration: 0.8, clearProps: 'all' }, '-=0.7')
         .fromTo('.floating-badge', { opacity: 0 }, { opacity: 1, duration: 0.6, stagger: 0.15, clearProps: 'opacity' }, '-=0.4');
 
-      // Parallax sutil nos glows de fundo
       if (typeof ScrollTrigger !== 'undefined') {
-        gsap.to('.hero-glow-1', {
-          yPercent: 30,
-          ease: 'none',
-          scrollTrigger: {
-            trigger: '.hero',
-            start: 'top top',
-            end: 'bottom top',
-            scrub: true
-          }
-        });
-        gsap.to('.hero-glow-2', {
-          yPercent: -20,
-          ease: 'none',
-          scrollTrigger: {
-            trigger: '.hero',
-            start: 'top top',
-            end: 'bottom top',
-            scrub: true
-          }
-        });
-
         // Pilares do Método: Destaque progressivo no scroll
         const pillarCards = document.querySelectorAll('.pillar-card');
         pillarCards.forEach((card) => {
@@ -143,7 +132,7 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   if (preloader) {
-    if (hasVisited) {
+    if (hasVisited || prefersReducedMotion) {
       preloader.style.display = 'none';
       launchHeroAnimations();
     } else {
@@ -223,20 +212,24 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // ==========================================================================
-  // 3. FAQ ACCORDION
+  // 3. FAQ ACCORDION (ACCESSIBLE WAI-ARIA)
   // ==========================================================================
   const faqItems = document.querySelectorAll('.faq-item');
   faqItems.forEach(item => {
-    const header = item.querySelector('.faq-header');
-    if (header) {
-      header.addEventListener('click', () => {
+    const trigger = item.querySelector('.faq-trigger') || item.querySelector('.faq-header');
+    if (trigger) {
+      trigger.addEventListener('click', () => {
         const isActive = item.classList.contains('active');
         faqItems.forEach(otherItem => {
           if (otherItem !== item) {
             otherItem.classList.remove('active');
+            const otherTrigger = otherItem.querySelector('.faq-trigger') || otherItem.querySelector('.faq-header');
+            if (otherTrigger) otherTrigger.setAttribute('aria-expanded', 'false');
           }
         });
-        item.classList.toggle('active', !isActive);
+        const willBeActive = !isActive;
+        item.classList.toggle('active', willBeActive);
+        trigger.setAttribute('aria-expanded', willBeActive ? 'true' : 'false');
       });
     }
   });
@@ -308,22 +301,39 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // ==========================================================================
-  // 7. SELETOR DE MODALIDADE (PRESENCIAL X ONLINE)
+  // 7. SELETOR DE MODALIDADE (PRESENCIAL X ONLINE - ACESSÍVEL)
   // ==========================================================================
   const modTabs = document.querySelectorAll('.modalidade-tab');
   const modContents = document.querySelectorAll('.modalidade-content');
 
-  modTabs.forEach(tab => {
+  modTabs.forEach((tab, index) => {
     tab.addEventListener('click', () => {
       const target = tab.dataset.target;
 
-      modTabs.forEach(t => t.classList.remove('active'));
+      modTabs.forEach(t => {
+        t.classList.remove('active');
+        t.setAttribute('aria-selected', 'false');
+        t.setAttribute('tabindex', '-1');
+      });
       modContents.forEach(c => c.classList.remove('active'));
 
       tab.classList.add('active');
+      tab.setAttribute('aria-selected', 'true');
+      tab.setAttribute('tabindex', '0');
       const activeContent = document.getElementById(target);
       if (activeContent) {
         activeContent.classList.add('active');
+      }
+    });
+
+    tab.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
+        e.preventDefault();
+        const nextIndex = e.key === 'ArrowRight' 
+          ? (index + 1) % modTabs.length 
+          : (index - 1 + modTabs.length) % modTabs.length;
+        modTabs[nextIndex].focus();
+        modTabs[nextIndex].click();
       }
     });
   });
