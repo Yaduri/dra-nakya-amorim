@@ -238,13 +238,18 @@ document.addEventListener('DOMContentLoaded', () => {
       navMenu.classList.toggle('active');
       const isExpanded = navMenu.classList.contains('active');
       navToggle.setAttribute('aria-expanded', isExpanded);
+      navToggle.setAttribute('aria-label', isExpanded ? 'Fechar Menu' : 'Abrir Menu');
       navToggle.innerHTML = isExpanded ? '<i class="fa-solid fa-xmark"></i>' : '<i class="fa-solid fa-bars"></i>';
     });
 
     navLinks.forEach(link => {
       link.addEventListener('click', () => {
         navMenu.classList.remove('active');
-        if (navToggle) navToggle.innerHTML = '<i class="fa-solid fa-bars"></i>';
+        if (navToggle) {
+          navToggle.setAttribute('aria-expanded', 'false');
+          navToggle.setAttribute('aria-label', 'Abrir Menu');
+          navToggle.innerHTML = '<i class="fa-solid fa-bars"></i>';
+        }
       });
     });
   }
@@ -343,8 +348,10 @@ document.addEventListener('DOMContentLoaded', () => {
         video.muted = !video.muted;
         if (video.muted) {
           btn.innerHTML = '<i class="fa-solid fa-volume-xmark"></i> Ativar Som';
+          btn.setAttribute('aria-label', 'Ativar som do vídeo');
         } else {
-          btn.innerHTML = '<i class="fa-solid fa-volume-high"></i> Mudar Som';
+          btn.innerHTML = '<i class="fa-solid fa-volume-high"></i> Silenciar Som';
+          btn.setAttribute('aria-label', 'Silenciar som do vídeo');
         }
       });
     }

@@ -114,10 +114,14 @@ ul {
     scroll-behavior: auto !important;
   }
 
+  /* Desativar loops contínuos e translações espaciais, mantendo feedback de cor/foco */
   *, *::before, *::after {
-    animation-duration: 0.001s !important;
+    animation-delay: -1ms !important;
+    animation-duration: 1ms !important;
     animation-iteration-count: 1 !important;
-    transition-duration: 0.001s !important;
+    scroll-behavior: auto !important;
+    transition-property: background-color, border-color, color, fill, stroke, opacity, box-shadow !important;
+    transition-duration: 0.15s !important;
   }
 
   .preloader {
@@ -129,7 +133,10 @@ ul {
     transform: none !important;
   }
 
-  .hero-image-card {
+  .hero-image-card,
+  .treatment-card,
+  .testimonial-card,
+  .step-card {
     opacity: 1 !important;
     transform: none !important;
   }
@@ -454,6 +461,18 @@ html.lenis, html.lenis body {
   font-size: 1.5rem;
   color: var(--color-text-main);
   cursor: pointer;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 10px;
+  border-radius: var(--radius-sm);
+  align-items: center;
+  justify-content: center;
+  transition: color var(--transition-fast), background-color var(--transition-fast);
+}
+
+.nav-toggle:focus-visible {
+  outline: 2px solid var(--color-rose-dark);
+  outline-offset: 2px;
 }
 
 /* --------------------------------------------------------------------------
@@ -1578,7 +1597,7 @@ h1, h2, h3, h4, .section-title, .hero-title, .footer-info h2, .melasma-banner h2
   }
   
   .nav-toggle {
-    display: block;
+    display: flex;
   }
   
   .hero {
@@ -1834,6 +1853,11 @@ h1, h2, h3, h4, .section-title, .hero-title, .footer-info h2, .melasma-banner h2
   background: var(--color-rose-dark);
 }
 
+.video-mute-btn:focus-visible {
+  outline: 2px solid var(--color-white);
+  outline-offset: 3px;
+}
+
 /* --------------------------------------------------------------------------
    22. SELETOR DE MODALIDADE PRESENCIAL X ONLINE (ITEM 3)
    -------------------------------------------------------------------------- */
@@ -1865,6 +1889,11 @@ h1, h2, h3, h4, .section-title, .hero-title, .footer-info h2, .melasma-banner h2
   display: flex;
   align-items: center;
   gap: 10px;
+}
+
+.modalidade-tab:focus-visible {
+  outline: 2px solid var(--color-rose-dark);
+  outline-offset: 3px;
 }
 
 .modalidade-tab.active {
@@ -1961,6 +1990,11 @@ h1, h2, h3, h4, .section-title, .hero-title, .footer-info h2, .melasma-banner h2
   border-color: var(--color-rose-dark);
   transform: translateY(-2px);
   box-shadow: var(--shadow-soft);
+}
+
+.quiz-option-btn:focus-visible {
+  outline: 2px solid var(--color-rose-dark);
+  outline-offset: 2px;
 }
 
 .quiz-result-box {
